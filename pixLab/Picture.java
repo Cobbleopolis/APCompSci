@@ -127,6 +127,61 @@ public class Picture extends SimplePicture {
         }
     }
 
+	/**
+	 * Method to set the green and blue to 0
+	 */
+	public void keepOnlyRed (){
+		Pixel[][] pixels = this.getPixels2D();
+		for (Pixel[] rowArray : pixels) {
+			for (Pixel pixelObj : rowArray) {
+				pixelObj.setGreen(0);
+				pixelObj.setBlue(0);
+			}
+		}
+	}
+
+	/**
+	 * Method to set the red and blue to 0
+	 */
+	public void keepOnlyGreen (){
+		Pixel[][] pixels = this.getPixels2D();
+		for (Pixel[] rowArray : pixels) {
+			for (Pixel pixelObj : rowArray) {
+				pixelObj.setRed(0);
+				pixelObj.setBlue(0);
+			}
+		}
+	}
+
+	/**
+	 * Method that inverts the pixels of image
+	 */
+	public void makeNegative (){
+		Pixel[][] pixels = this.getPixels2D();
+		for (Pixel[] rowArray : pixels) {
+			for (Pixel pixelObj : rowArray) {
+				pixelObj.setRed(255 - pixelObj.getRed());
+				pixelObj.setGreen(255 - pixelObj.getGreen());
+				pixelObj.setBlue(255 - pixelObj.getBlue());
+			}
+		}
+	}
+
+	/**
+	 * Method to make the image grayscale
+	 */
+	public void makeGrayscale (){
+		Pixel[][] pixels = this.getPixels2D();
+		for (Pixel[] rowArray : pixels) {
+			for (Pixel pixelObj : rowArray) {
+				int avg = (pixelObj.getRed() + pixelObj.getGreen() + pixelObj.getBlue()) / 3;
+				pixelObj.setRed(avg);
+				pixelObj.setGreen(avg);
+				pixelObj.setBlue(avg);
+			}
+		}
+	}
+
     /**
      * Method that mirrors the picture around a
      * vertical mirror in the center of the picture
