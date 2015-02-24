@@ -350,6 +350,71 @@ public class Picture extends SimplePicture {
     }
 
     /**
+     * copy from the passed fromPic to the
+     * specified startRow and startCol in the
+     * current picture
+     *
+     * @param fromPic  the picture to copy from
+     * @param startRow the start row to copy to
+     * @param startCol the start col to copy to
+     * @param endRow the end row to copy to
+     * @param endCol the end col to copy to
+     */
+    public void copy(Picture fromPic, int startRow, int startCol, int endRow, int endCol) {
+        Pixel fromPixel = null;
+        Pixel toPixel = null;
+        Pixel[][] toPixels = this.getPixels2D();
+        Pixel[][] fromPixels = fromPic.getPixels2D();
+        for (int fromRow = startRow, toRow = startRow;
+             fromRow < endRow &&
+                     toRow < endRow;
+             fromRow++, toRow++) {
+            for (int fromCol = startCol, toCol = startCol;
+                 fromCol < endCol &&
+                         toCol < endCol;
+                 fromCol++, toCol++) {
+                fromPixel = fromPixels[fromRow][fromCol];
+                toPixel = toPixels[toRow][toCol];
+                toPixel.setColor(fromPixel.getColor());
+            }
+        }
+    }
+
+    /**
+     * copy from the passed fromPic to the
+     * specified startRow and startCol in the
+     * current picture
+     *
+     * @param fromPic  the picture to copy from
+     * @param startRow the start row to copy to
+     * @param startCol the start col to copy to
+     * @param endRow the end row to copy to
+     * @param endCol the end col to copy to
+     * @param xLoc the x position of the copied section
+     * @param yLoc the y position of the copied section
+     */
+    public void copy(Picture fromPic, int startRow, int startCol, int endRow, int endCol, int xLoc, int yLoc) {
+        Pixel fromPixel = null;
+        Pixel toPixel = null;
+        Pixel[][] toPixels = this.getPixels2D();
+        Pixel[][] fromPixels = fromPic.getPixels2D();
+        for (int fromRow = startRow, toRow = yLoc;
+             fromRow < endRow &&
+                     toRow < (yLoc + endRow);
+             fromRow++, toRow++) {
+            for (int fromCol = startCol, toCol = xLoc;
+                 fromCol < endCol &&
+                         toCol < (xLoc + endCol);
+                 fromCol++, toCol++) {
+                fromPixel = fromPixels[fromRow][fromCol];
+                toPixel = toPixels[toRow][toCol];
+                toPixel.setColor(fromPixel.getColor());
+            }
+        }
+    }
+
+
+    /**
      * Method to create a collage of several pictures
      */
     public void createCollage() {
@@ -365,6 +430,36 @@ public class Picture extends SimplePicture {
         this.copy(flower2, 500, 0);
         this.mirrorVertical();
         this.write("collage.jpg");
+    }
+
+    /**
+     * Method to create a collage of several pictures
+     */
+    public void myCollage() {
+        Picture seagull = new Picture("seagull.jpg");
+        Picture snowman = new Picture("snowman.jpg");
+        this.copy(seagull, 220, 220, 360, 360, 0, 0);
+        this.copy(snowman, 70, 155, 170, 250, 22, 140);
+//        this.copy(seagull, 220, 220, 360, 360, 500, 0);
+//        this.copy(snowman, 70, 155, 170, 250, 523, 140);
+
+        Picture robot = new Picture("robot.jpg");
+
+        Picture robotGreyscale = new Picture("robot.jpg");
+        robotGreyscale.makeGrayscale();
+
+        Picture robotBlue = new Picture("robot.jpg");
+        robotBlue.keepOnlyBlue();
+
+        Picture robotRed = new Picture("robot.jpg");
+        robotRed.keepOnlyRed();
+
+        this.copy(robot, 0, 0, robot.getHeight(), robot.getWidth(), 140, 0);
+        this.copy(robotGreyscale, 0, 0, robotGreyscale.getHeight(), robotGreyscale.getWidth(), 140 + robotGreyscale.getWidth(), 0);
+        this.copy(robotBlue, 0, 0, robotBlue.getHeight(), robotBlue.getWidth(), 140, robotBlue.getHeight());
+        this.copy(robotRed, 0, 0, robotRed.getHeight(), robotRed.getWidth(), 140 + robotRed.getWidth(), robotRed.getHeight());
+        this.mirrorVertical();
+        this.mirrorHorizontal();
     }
 
 
@@ -398,9 +493,9 @@ public class Picture extends SimplePicture {
      * method
      */
     public static void main(String[] args) {
-        Picture p = new Picture("images/snowman.jpg");
-        p.mirrorArms();
-        p.explore();
+        Picture canvas = new Picture("640x480.jpg");
+        canvas.myCollage();
+        canvas.explore();
     }
 
 } // this } is the end of class Picture, put all new methods before this
