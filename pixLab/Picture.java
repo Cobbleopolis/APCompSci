@@ -398,8 +398,8 @@ public class Picture extends SimplePicture {
      * method
      */
     public static void main(String[] args) {
-        Picture p = new Picture("seagull.jpg");
-        p.mirrorGull();
+        Picture p = new Picture("images/snowman.jpg");
+        p.mirrorArms();
         p.explore();
     }
 
