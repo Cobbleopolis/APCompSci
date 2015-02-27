@@ -368,28 +368,73 @@ public class Picture extends SimplePicture {
     }
 
 
-    /**
+	/**
+	 * Method to show large changes in color
+	 *
+	 * @param edgeDist the distance for finding edges
+	 */
+	public void edgeDetectionOrig(int edgeDist) {
+		Pixel currPixel = null;
+		Pixel bottomPixel = null;
+		Pixel[][] pixels = this.getPixels2D();
+		Color bottomColor = null;
+		for (int row = 0; row < pixels.length - 1; row++) {
+			for (int col = 0;
+				 col < pixels[0].length - 1; col++) {
+				currPixel = pixels[row][col];
+				bottomPixel = pixels[row + 1][col];
+				bottomColor = bottomPixel.getColor();
+				if (currPixel.colorDistance(bottomColor) > edgeDist)
+					currPixel.setColor(Color.BLACK);
+				else
+					currPixel.setColor(Color.WHITE);
+			}
+		}
+	}
+
+	/**
      * Method to show large changes in color
      *
      * @param edgeDist the distance for finding edges
      */
     public void edgeDetection(int edgeDist) {
+        Pixel currPixel = null;
         Pixel topPixel = null;
-        Pixel bottomPixel = null;
+		Pixel rightPixel = null;
         Pixel[][] pixels = this.getPixels2D();
         Color topColor = null;
-        for (int row = 0; row < pixels.length - 1; row++) {
-            for (int col = 0;
-                 col < pixels[0].length; col++) {
-                topPixel = pixels[row][col];
-                bottomPixel = pixels[row + 1][col];
-                topColor = bottomPixel.getColor();
-                if (topPixel.colorDistance(topColor) > edgeDist)
-                    topPixel.setColor(Color.BLACK);
-//                else
-//                    topPixel.setColor(Color.WHITE);
+        Color rightColor = null;
+        for (int row = pixels.length - 1; row > 0; row--) {
+            for (int col = 0; col < pixels[0].length - 1; col++) {
+                currPixel = pixels[row][col];
+                topPixel = pixels[row - 1][col];
+				rightPixel = pixels[row][col + 1];
+                topColor = topPixel.getColor();
+				rightColor = rightPixel.getColor();
+                if (currPixel.colorDistance(topColor) > edgeDist || currPixel.colorDistance(rightColor) > edgeDist)
+                    currPixel.setColor(Color.BLACK);
+                else
+                    currPixel.setColor(Color.WHITE);
             }
         }
+		for (int col = 0; col < pixels[0].length - 1; col++) {
+			currPixel = pixels[0][col];
+			rightPixel = pixels[0][col + 1];
+			rightColor = rightPixel.getColor();
+			if (currPixel.colorDistance(rightColor) > edgeDist)
+				currPixel.setColor(Color.BLACK);
+			else
+				currPixel.setColor(Color.WHITE);
+		}
+		for (int row = pixels.length - 1; row > 0; row--) {
+			currPixel = pixels[row][pixels[0].length - 1];
+			topPixel = pixels[row - 1][pixels[0].length - 1];
+			topColor = topPixel.getColor();
+			if (currPixel.colorDistance(topColor) > edgeDist)
+				currPixel.setColor(Color.BLACK);
+			else
+				currPixel.setColor(Color.WHITE);
+		}
     }
 
 
@@ -398,7 +443,11 @@ public class Picture extends SimplePicture {
      */
     public static void main(String[] args) {
 		Picture picture = new Picture("beach.jpg");
-		picture.edgeDetection(1);
+		picture.explore();
+		picture.edgeDetectionOrig(5);
+		picture.explore();
+		picture = new Picture("beach.jpg");
+		picture.edgeDetection(5);
 		picture.explore();
     }
 
