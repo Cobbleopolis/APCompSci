@@ -374,21 +374,20 @@ public class Picture extends SimplePicture {
      * @param edgeDist the distance for finding edges
      */
     public void edgeDetection(int edgeDist) {
-        Pixel leftPixel = null;
-        Pixel rightPixel = null;
+        Pixel topPixel = null;
+        Pixel bottomPixel = null;
         Pixel[][] pixels = this.getPixels2D();
-        Color rightColor = null;
-        for (int row = 0; row < pixels.length; row++) {
+        Color topColor = null;
+        for (int row = 0; row < pixels.length - 1; row++) {
             for (int col = 0;
-                 col < pixels[0].length - 1; col++) {
-                leftPixel = pixels[row][col];
-                rightPixel = pixels[row][col + 1];
-                rightColor = rightPixel.getColor();
-                if (leftPixel.colorDistance(rightColor) >
-                        edgeDist)
-                    leftPixel.setColor(Color.BLACK);
-                else
-                    leftPixel.setColor(Color.WHITE);
+                 col < pixels[0].length; col++) {
+                topPixel = pixels[row][col];
+                bottomPixel = pixels[row + 1][col];
+                topColor = bottomPixel.getColor();
+                if (topPixel.colorDistance(topColor) > edgeDist)
+                    topPixel.setColor(Color.BLACK);
+//                else
+//                    topPixel.setColor(Color.WHITE);
             }
         }
     }
@@ -398,9 +397,9 @@ public class Picture extends SimplePicture {
      * method
      */
     public static void main(String[] args) {
-        Picture p = new Picture("seagull.jpg");
-        p.mirrorGull();
-        p.explore();
+		Picture picture = new Picture("beach.jpg");
+		picture.edgeDetection(1);
+		picture.explore();
     }
 
 } // this } is the end of class Picture, put all new methods before this
