@@ -367,31 +367,6 @@ public class Picture extends SimplePicture {
         this.write("collage.jpg");
     }
 
-
-	/**
-	 * Method to show large changes in color
-	 *
-	 * @param edgeDist the distance for finding edges
-	 */
-	public void edgeDetectionOrig(int edgeDist) {
-		Pixel currPixel = null;
-		Pixel bottomPixel = null;
-		Pixel[][] pixels = this.getPixels2D();
-		Color bottomColor = null;
-		for (int row = 0; row < pixels.length - 1; row++) {
-			for (int col = 0;
-				 col < pixels[0].length - 1; col++) {
-				currPixel = pixels[row][col];
-				bottomPixel = pixels[row + 1][col];
-				bottomColor = bottomPixel.getColor();
-				if (currPixel.colorDistance(bottomColor) > edgeDist)
-					currPixel.setColor(Color.BLACK);
-				else
-					currPixel.setColor(Color.WHITE);
-			}
-		}
-	}
-
 	/**
      * Method to show large changes in color
      *
@@ -442,13 +417,7 @@ public class Picture extends SimplePicture {
      * method
      */
     public static void main(String[] args) {
-		Picture picture = new Picture("beach.jpg");
-		picture.explore();
-		picture.edgeDetectionOrig(5);
-		picture.explore();
-		picture = new Picture("beach.jpg");
-		picture.edgeDetection(5);
-		picture.explore();
+	
     }
 
 } // this } is the end of class Picture, put all new methods before this
