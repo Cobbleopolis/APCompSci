@@ -1,17 +1,13 @@
 public class Weird {
     public static void main(String[] args) {
-        int number = 8;
-        halfTheFun(11);
-        halfTheFun(2 - 3 + 2 * 8);
-        halfTheFun(number);
-        System.out.println("number = " + number);
+		System.out.println(mystery(6));
     }   
     
-    public static void halfTheFun(int number) {
-        number = number / 2;
-        for (int count = 1; count <= number; count++) {
-            System.out.print(count + " ");
-        }
-        System.out.println();
-    }
+    static int mystery(int n){
+		if(n <= 0){
+			return 10;
+		} else {
+			return n + mystery(n-1);
+		}
+	}
 }
