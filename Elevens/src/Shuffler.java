@@ -7,12 +7,12 @@ public class Shuffler {
 	 * The number of consecutive shuffle steps to be performed in each call
 	 * to each sorting procedure.
 	 */
-	private static final int SHUFFLE_COUNT = 3;
+	private static final int SHUFFLE_COUNT = (int)(Math.random() * 25);
 
 	/**
 	 * The number of values to shuffle.
 	 */
-	private static final int VALUE_COUNT = 52;
+	private static final int VALUE_COUNT = (int)(Math.random() * 50);
 
 	/**
 	 * Tests shuffling methods.
@@ -60,17 +60,19 @@ public class Shuffler {
 	 * @param values is an array of integers simulating cards to be shuffled.
 	 */
 	public static void perfectShuffle(int[] values) {
-		int[] shuffled = new int[52];
+		int[] shuffled = new int[values.length];
+		int mid = ((values.length + (values.length % 2)) / 2) - 1;
 		int k = 0;
-		for(int j = 0; j <= 25; j++){
+		for(int j = 0; j <= mid; j++){
 			shuffled[k] = values[j];
 			k += 2;
 		}
 		k = 1;
-		for(int j = 26; j <= 51; j ++){
+		for(int j = mid + 1; j < values.length; j++){
 			shuffled[k] = values[j];
 			k += 2;
 		}
+		System.arraycopy(shuffled, 0, values, 0, shuffled.length);
 	}
 
 	/**
@@ -85,11 +87,8 @@ public class Shuffler {
 	 * @param values is an array of integers simulating cards to be shuffled.
 	 */
 	public static void selectionShuffle(int[] values) {
-		for(int k = 51; k > 0; k--) {
-			int r = 0;
-			for(int i = 0; i <= k; i++) {
-				r = Math.max(values[i], r);
-			}
+		for(int k = values.length - 1; k > 0; k--) {
+			int r = (int)(Math.random() * k);
 			int tmp = values[k];
 			values[k] = values[r];
 			values[r] = tmp;

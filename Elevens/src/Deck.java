@@ -1,10 +1,10 @@
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Deck class represents a shuffled deck of cards.
  * It provides several operations including
- *      initialize, shuffle, deal, and check if empty.
+ * initialize, shuffle, deal, and check if empty.
  */
 public class Deck {
 
@@ -25,21 +25,25 @@ public class Deck {
 	 * Creates a new <code>Deck</code> instance.<BR>
 	 * It pairs each element of ranks with each element of suits,
 	 * and produces one of the corresponding card.
-	 * @param ranks is an array containing all of the card ranks.
-	 * @param suits is an array containing all of the card suits.
+	 *
+	 * @param ranks  is an array containing all of the card ranks.
+	 * @param suits  is an array containing all of the card suits.
 	 * @param values is an array containing all of the card point values.
 	 */
 	public Deck(String[] ranks, String[] suits, int[] values) {
 		ArrayList<Card> newCards = new ArrayList<Card>();
-		for(int i = 0; i < ranks.length; i++){
-			newCards.add(new Card(ranks[i], suits[i], values[i]));
-		}
+		for (int i = 0; i < suits.length; i++)
+			for (int j = 0; j < ranks.length; j++) {
+				newCards.add(new Card(ranks[j], suits[i], values[j]));
+			}
 		cards = newCards;
+		size = cards.size();
 	}
 
 
 	/**
 	 * Determines if this deck is empty (no undealt cards).
+	 *
 	 * @return true if this deck is empty, false otherwise.
 	 */
 	public boolean isEmpty() {
@@ -48,10 +52,11 @@ public class Deck {
 
 	/**
 	 * Accesses the number of undealt cards in this deck.
+	 *
 	 * @return the number of undealt cards in this deck.
 	 */
 	public int size() {
-		return cards.size();
+		return size;
 	}
 
 	/**
@@ -59,23 +64,34 @@ public class Deck {
 	 * and reset the size to represent the entire deck.
 	 */
 	public void shuffle() {
-		/* *** TO BE IMPLEMENTED IN ACTIVITY 4 *** */
+		int[] newOrder = new int[cards.size()];
+		for(int i = 0; i < newOrder.length; i++) {
+			newOrder[i] = i;
+		}
+		Shuffler.selectionShuffle(newOrder);
+		List<Card> newCards = new ArrayList<>();
+		for(int i: newOrder){
+			newCards.add(cards.get(i));
+		}
+		cards = newCards;
 	}
 
 	/**
 	 * Deals a card from this deck.
+	 *
 	 * @return the card just dealt, or null if all the cards have been
-	 *         previously dealt.
+	 * previously dealt.
 	 */
 	public Card deal() {
-		if(isEmpty()) return null;
-		Card cardToDeal = cards.get(cards.size() - 1);
-		cards =  cards.subList(0, cards.size() - 1);
+		if (isEmpty()) return null;
+		Card cardToDeal = cards.get(size());
+		size--;
 		return cardToDeal;
 	}
 
 	/**
 	 * Generates and returns a string representation of this deck.
+	 *
 	 * @return a string representation of this deck.
 	 */
 	@Override

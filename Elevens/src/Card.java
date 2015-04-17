@@ -32,8 +32,6 @@ public class Card {
 	 *                  containing the point value of the card
 	 */
 	public Card(String cardRank, String cardSuit, int cardPointValue) {
-		if (!cardRank.toLowerCase().equals("ace") && !cardRank.toLowerCase().equals("king") && !cardRank.toLowerCase().equals("queen") && !cardRank.toLowerCase().equals("jack")) throw new AssertionError();
-		if (!cardSuit.toLowerCase().equals("spades") && !cardSuit.toLowerCase().equals("clubs") && !cardSuit.toLowerCase().equals("diamonds ") && !cardSuit.toLowerCase().equals("hearts")) throw new AssertionError();
 		rank = cardRank.toLowerCase();
 		suit = cardSuit.toLowerCase();
 		pointValue = cardPointValue;
