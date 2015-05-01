@@ -32,8 +32,8 @@ public class Card {
 	 *                  containing the point value of the card
 	 */
 	public Card(String cardRank, String cardSuit, int cardPointValue) {
-		rank = cardRank.toLowerCase();
-		suit = cardSuit.toLowerCase();
+		rank = cardRank;
+		suit = cardSuit;
 		pointValue = cardPointValue;
 	}
 
@@ -43,7 +43,7 @@ public class Card {
 	 * @return this <code>Card's</code> suit.
 	 */
 	public String suit() {
-		return Character.toUpperCase(suit.charAt(0)) + suit.substring(1);
+		return suit;
    }
 
 	/**
@@ -51,7 +51,7 @@ public class Card {
 	 * @return this <code>Card's</code> rank.
 	 */
 	public String rank() {
-		return Character.toUpperCase(rank.charAt(0)) + rank.substring(1);
+		return rank;
 	}
 
    /**
